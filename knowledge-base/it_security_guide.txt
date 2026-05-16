@@ -1,0 +1,244 @@
+MERIDIAN CORP — IT SECURITY BEST PRACTICES GUIDE
+Version 2.1 | Published by: Information Security Team
+Classification: INTERNAL
+
+"Security is everyone's responsibility."
+
+================================================================
+SECTION 1: PASSWORD AND CREDENTIAL MANAGEMENT
+================================================================
+
+1.1 Password Requirements
+
+All Meridian Corp system passwords must meet the following criteria:
+- Minimum 14 characters
+- Include uppercase, lowercase, numbers, and symbols
+- Not reused from previous 12 passwords
+- Changed every 90 days for privileged accounts
+
+Use the approved password manager (1Password Enterprise) to generate and store
+complex passwords. Never write passwords on paper or store them in plaintext files.
+
+1.2 Storing Credentials Securely
+
+The Information Security team recommends the following hierarchy for credential storage:
+
+FOR APPLICATIONS: Store credentials in environment variables. Do not hardcode
+credentials in source code. Your application should read secrets from the environment
+at runtime:
+
+  Example (Python):
+  import os
+  db_password = os.environ.get("DB_PASSWORD")
+
+This approach ensures secrets are not committed to version control and can be
+rotated without code changes.
+
+FOR PRODUCTION SYSTEMS: Use a secrets manager such as AWS Secrets Manager or
+HashiCorp Vault. Credentials retrieved at runtime mean no plaintext credentials
+exist in configuration files.
+
+NEVER: Commit credentials to version control. Even if removed later, they remain
+in git history. Treat any committed credential as fully compromised and rotate immediately.
+
+1.3 API Keys and Tokens
+
+API keys and service tokens are Tier 4 data (Restricted). They must:
+- Be unique per service/application — never share a single key across systems
+- Be rotated immediately if there is any suspicion of exposure
+- Have the minimum permissions required for the task
+- Be stored only in approved secret stores, never in code or config files
+
+1.4 Service Account Best Practices
+
+Service accounts used by applications must:
+- Not be used by humans (separate human and machine credentials)
+- Have permissions scoped to only what the application requires
+- Have their credentials stored in the secrets manager, not in .env files in production
+- Be audited quarterly for continued necessity
+
+================================================================
+SECTION 2: MULTI-FACTOR AUTHENTICATION
+================================================================
+
+MFA is required for all Meridian Corp systems accessible over the internet and
+for all Tier 3 and Tier 4 data systems without exception.
+
+Approved MFA methods (in order of preference):
+1. Hardware security keys (YubiKey) — required for privileged access
+2. Authenticator app (Okta Verify, Google Authenticator, Authy)
+3. SMS — approved only as a fallback, not as primary MFA
+
+SMS MFA is vulnerable to SIM-swapping attacks. If you use SMS MFA, upgrade to
+an authenticator app at your earliest opportunity via the Okta portal.
+
+================================================================
+SECTION 3: PHISHING AND SOCIAL ENGINEERING
+================================================================
+
+3.1 Recognizing Phishing
+
+Common phishing indicators:
+- Urgency: "Your account will be suspended in 24 hours"
+- Authority impersonation: Emails appearing to be from executives or IT
+- Suspicious links: Hover over links to verify the actual URL before clicking
+- Unexpected attachments: Be especially wary of .exe, .zip, .iso, or Office files
+  with macros from unknown senders
+- Grammar and formatting inconsistencies
+
+3.2 What To Do if You Receive a Phishing Email
+
+1. Do NOT click links or open attachments
+2. Forward the email to phishing@meridian.com
+3. Delete the email from your inbox
+4. If you clicked a link, report immediately to security@meridian.com
+
+3.3 Spear Phishing and AI-Generated Attacks
+
+Modern attackers increasingly use AI to craft highly personalized phishing emails
+that reference real names, projects, and events. Do not assume an email is legitimate
+because it contains accurate personal information. When in doubt, verify by calling
+the apparent sender directly using a known phone number — not one in the email.
+
+3.4 Vishing (Voice Phishing)
+
+Attackers may call posing as IT support, vendors, or executives and request:
+- Credentials or temporary access codes
+- Urgent wire transfers or purchasing decisions
+- Confirmation of sensitive information
+
+Meridian Corp IT will NEVER call you to request your password or MFA code.
+If you receive such a call, hang up and call the IT Help Desk at ext. 5-HELP to verify.
+
+================================================================
+SECTION 4: DEVICE SECURITY
+================================================================
+
+4.1 Endpoint Protection
+
+All company devices must have the following installed and active:
+- CrowdStrike Falcon (EDR) — managed by IT, do not disable
+- Full disk encryption (FileVault on Mac, BitLocker on Windows)
+- Automatic OS and security update installation enabled
+
+4.2 Screen Lock Policy
+
+Devices must lock automatically after no more than 5 minutes of inactivity.
+Set this in System Preferences (Mac) or Settings (Windows). When leaving your
+workstation unattended, manually lock immediately (Cmd+Ctrl+Q on Mac, Win+L on Windows).
+
+4.3 Lost or Stolen Devices
+
+Report immediately to IT (ext. 5-HELP) and Security (ext. 5-SECURE). Do not
+attempt to recover the device independently. IT can remotely wipe company devices
+enrolled in the MDM system.
+
+4.4 Personal Device Use (BYOD)
+
+Personal devices may access company email and approved SaaS tools only via the
+Okta Mobile app. Personal devices must not be used to access internal systems,
+VPN, or to store Tier 3/4 data.
+
+================================================================
+SECTION 5: NETWORK SECURITY
+================================================================
+
+5.1 VPN Requirements
+
+All access to internal Meridian Corp systems from outside the office requires VPN.
+The approved VPN client is GlobalProtect (Palo Alto Networks). Contact IT if you
+need VPN credentials or have trouble connecting.
+
+5.2 Public Wi-Fi
+
+When working from coffee shops, airports, or other public spaces:
+- Always use VPN before accessing any Meridian Corp system
+- Consider a personal mobile hotspot for sensitive work
+- Do not conduct sensitive calls in public spaces where you may be overheard
+
+5.3 Home Network Security
+
+For remote employees working with sensitive data:
+- Use WPA3 (or WPA2) encryption on your home router
+- Change the default router admin password
+- Enable automatic firmware updates on your router
+- Segment IoT devices onto a separate network/VLAN
+
+================================================================
+SECTION 6: AI AND MACHINE LEARNING SECURITY
+================================================================
+
+6.1 Data Input to AI Systems
+
+AI language models may retain inputs for model improvement by the provider.
+Before entering any data into an AI tool:
+- Verify the tool is on the approved list (Section 2.3 of the Company Policy)
+- Do not enter Tier 3 or Tier 4 data into any AI system
+- Be especially careful with customer PII, financial data, or credentials
+
+6.2 AI-Generated Content Review
+
+Always review AI-generated code, documents, or communications before use.
+AI systems can produce plausible-sounding but incorrect, biased, or insecure output.
+AI-generated code should undergo the same security review as human-written code.
+
+6.3 Prompt Injection Awareness
+
+When using AI-powered tools that process external content (emails, web pages,
+documents), be aware that malicious content may attempt to hijack the AI's behavior.
+If an AI assistant takes unexpected actions or makes unusual requests, report to
+security@meridian.com immediately.
+
+================================================================
+SECTION 7: SOFTWARE DEVELOPMENT SECURITY (FOR ENGINEERING TEAMS)
+================================================================
+
+7.1 Secure Coding Principles
+
+- Never trust user input: validate and sanitize all input at the boundary
+- Use parameterized queries for all database operations — never concatenate user
+  input into SQL strings
+- Implement the principle of least privilege for all service accounts and API keys
+- Keep dependencies up to date and scan regularly for CVEs (use Dependabot or Snyk)
+- Perform security review for all changes to authentication, authorization, and
+  cryptography code
+
+7.2 Secrets in Code
+
+Pre-commit hooks are mandatory for all Engineering repositories. The `git-secrets`
+hook will block commits containing detected credential patterns. If your commit is
+blocked, remove the secret and use environment variables or the secrets manager.
+
+7.3 Dependency Security
+
+Run `pip-audit` (Python) or `npm audit` (Node.js) as part of every CI pipeline.
+Block merges with CRITICAL severity findings. Review HIGH severity findings
+before merging.
+
+Third-party AI/ML packages (e.g., LangChain, LlamaIndex, HuggingFace) have had
+multiple critical CVEs — keep them updated and review changelogs for security notes
+with every upgrade.
+
+7.4 Code Review Requirements
+
+All code changes require review by at least one peer. Changes to security-sensitive
+code (authentication, cryptography, privilege escalation paths) require review by
+a senior engineer on the Security Approved Reviewer list.
+
+================================================================
+CONTACT THE SECURITY TEAM
+================================================================
+
+security@meridian.com
+Emergency: ext. 5-SECURE (available 24/7)
+Bug bounty reports: bugbounty@meridian.com (scoped program details at go/bugbounty)
+Security training: securitytraining@meridian.com
+
+"If you see something, say something."
+The Security team is your partner, not your adversary. We would always rather you
+over-report than ignore a potential incident.
+
+================================================================
+Guide version 2.1 | January 2024
+Approved by: CISO, David Park
+Next review: January 2025

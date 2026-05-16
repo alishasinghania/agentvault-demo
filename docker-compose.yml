@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  agentvault:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./knowledge-base:/app/knowledge-base
+    depends_on:
+      - chromadb
+
+  chromadb:
+    image: chromadb/chroma:0.4.22
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+
+  mcp-filesystem:
+    image: node:20-slim
+    command: >
+      sh -c "npx -y @modelcontextprotocol/server-filesystem /"
+    volumes:
+      - /:/mnt/host:ro
+    ports:
+      - "8002:8002"
+
+  mcp-sqlite:
+    image: node:20-slim
+    command: >
+      sh -c "npx -y @modelcontextprotocol/server-sqlite /app/data/meridian.db"
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "8003:8003"
+    environment:
+      DB_CONNECTION: "sqlite:///app/data/meridian.db"
+      DB_PASSWORD: "meridian_db_pass_2024"
+      ADMIN_TOKEN: "admin-token-meridian-2024"
+      SMTP_PASSWORD: "smtp_meridian_2024!"
+
+volumes:
+  chroma_data:

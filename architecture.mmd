@@ -1,0 +1,122 @@
+flowchart TD
+    subgraph UI["Frontend Layer"]
+        A[Browser Chat UI\nindex.html + app.js]
+    end
+
+    subgraph Gateway["API Gateway — FastAPI"]
+        B[HTTP Routes\n/api/chat /api/documents]
+        B2[WebSocket\n/ws/chat]
+        B3[File Upload\nPOST /api/documents]
+    end
+
+    subgraph Orchestration["Agent Orchestration — LangGraph"]
+        direction TB
+        C[Primary Agent\nAnthropic Claude Haiku]
+        D[Code Agent\nPythonREPLTool]
+        E[Research Crew\nCrewAI]
+        F[Memory Agent\nConversationBufferMemory]
+        ORC[Graph Router\norchestrator.py]
+    end
+
+    subgraph RAGPipeline["RAG Pipeline"]
+        direction TB
+        G[LlamaIndex Ingestor\nSimpleDirectoryReader]
+        H[HuggingFace Embedder\nall-MiniLM-L6-v2]
+        I[ChromaDB\nVector Store]
+        J[LangChain RetrievalQA\nretrieval_chain.py]
+    end
+
+    subgraph Tools["Tool Layer — LangChain Tools"]
+        K[Email Tool\nSMTP autonomous send]
+        L[Database Tool\nSQLite raw exec]
+        M[Utils\nopenai intent classifier]
+    end
+
+    subgraph MCPServers["MCP Server Layer"]
+        N[Filesystem Server\n@modelcontextprotocol/server-filesystem\nroot: /]
+        O[SQLite MCP Server\n@modelcontextprotocol/server-sqlite]
+        P[Web Search Server\nCustom — app/mcp/web_search_server.py\ntool name: search]
+    end
+
+    subgraph KnowledgeBase["Knowledge Base"]
+        Q[company_policy.txt]
+        R[employee_handbook.txt]
+        S[it_security_guide.txt]
+        T[User Uploaded Files\nPOST /api/documents]
+    end
+
+    subgraph SupplyChain["Supply Chain Layer"]
+        SC1[anthropic==0.23.0]
+        SC2[langchain==0.0.131\nCVE-pinned]
+        SC3[langchain-experimental==0.0.47\nCVE-pinned]
+        SC4[HuggingFace Hub\nno integrity check]
+        SC5[openai — shadow dep\nnot in requirements.txt]
+    end
+
+    subgraph Config["Configuration — config.py"]
+        CFG1[DB_PASSWORD\ninsecure default]
+        CFG2[INTERNAL_API_KEY\ninsecure default]
+        CFG3[SMTP_PASSWORD\ninsecure default]
+        CFG4[FALLBACK_DB_PASS\nhardcoded]
+    end
+
+    %% Frontend → Gateway
+    A -- user_query --> B2
+    A -- file_upload --> B3
+    B2 -- llm_output streaming --> A
+    B -- user_query --> ORC
+
+    %% Gateway → Orchestration
+    B2 -- user_query --> ORC
+    B3 -- file_content --> G
+
+    %% Orchestration routing
+    ORC -- user_query --> C
+    C -- code_task --> D
+    C -- research_task --> E
+    C -- conversation_history --> F
+    F -- history --> C
+    E -- crew_output --> ORC
+
+    %% RAG flow
+    C -- retrieval_request --> J
+    J -- user_query --> I
+    I -- similarity_search --> J
+    J -- retrieved_docs --> C
+    I -- query --> H
+    H -- embeddings --> I
+    G -- documents --> H
+    Q & R & S & T --> G
+
+    %% Tool calls
+    C -- email_content --> K
+    C -- nl_query --> L
+    L -- llm_generated_sql --> L
+    C -- search_query --> P
+    C -- file_request --> N
+
+    %% MCP results
+    N -- file_content --> C
+    O -- db_result --> C
+    P -- search_result + injection --> C
+
+    %% Config flows into system prompt
+    CFG1 -- DB_PASSWORD --> C
+    CFG2 -- INTERNAL_API_KEY --> C
+    CFG3 -- SMTP_PASSWORD --> K
+
+    %% Supply chain
+    SC1 --> C
+    SC2 --> J
+    SC3 --> D
+    SC4 --> H
+    SC5 --> M
+
+    %% Styling
+    classDef vuln fill:#ff4444,color:#fff,stroke:#cc0000
+    classDef warn fill:#ff8800,color:#fff,stroke:#cc6600
+    classDef normal fill:#2196F3,color:#fff,stroke:#1565C0
+
+    class C,D,E,G,J,K,L,N,P vuln
+    class H,M,F warn
+    class A,B,B2,B3,I,O normal

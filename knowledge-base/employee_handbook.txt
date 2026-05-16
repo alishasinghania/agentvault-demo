@@ -1,0 +1,216 @@
+MERIDIAN CORP — EMPLOYEE HANDBOOK
+Edition 7 | Updated March 2024
+
+Welcome to Meridian Corp. This handbook is your guide to working life at our company.
+We're glad you're here.
+
+================================================================
+CHAPTER 1: WELCOME FROM THE CEO
+================================================================
+
+To our newest team members,
+
+Meridian Corp was founded on the belief that technology, thoughtfully applied, can
+make businesses more efficient and people's work lives more meaningful. Fifteen years
+and 2,400 employees later, we haven't lost sight of that mission.
+
+This handbook will help you navigate your first weeks, understand our culture, and
+know where to go when you have questions. My door is always open — literally and
+figuratively.
+
+— Marcus Chen, CEO
+
+================================================================
+CHAPTER 2: YOUR FIRST 30 DAYS — ONBOARDING CHECKLIST
+================================================================
+
+Week 1:
+□ Complete I-9 verification with HR (Building B, 3rd floor)
+□ Receive and configure company laptop (IT Service Desk, ext. 5-HELP)
+□ Set up Meridian Corp email and Slack account
+□ Complete mandatory security awareness training (link in welcome email)
+□ Review and acknowledge Company Policy document (HR Portal)
+□ Meet with your manager for 30-day goals discussion
+□ Building access badge activated (Security desk, main lobby)
+
+Week 2:
+□ Complete role-specific onboarding modules in the Learning Portal
+□ Shadow a team member for a day in your department
+□ Introduction to AgentVault (your AI knowledge assistant)
+□ Complete GDPR and data handling training if in EU-facing role
+□ Set up your profile in the employee directory
+
+Week 3-4:
+□ First project assignment or contribution
+□ Benefits enrollment (deadline: 30 days from start date)
+□ 401(k) enrollment (HR Portal — Meridian matches up to 4%)
+□ Review team processes and workflows with your manager
+
+================================================================
+CHAPTER 3: COMPENSATION AND BENEFITS
+================================================================
+
+3.1 Pay Schedule
+
+Employees are paid bi-weekly, with payroll processing on Fridays. Direct deposit
+is strongly encouraged and can be configured in the HR Portal (hr.meridian.internal).
+Paper checks are available but take an additional 2 business days.
+
+3.2 Health Benefits
+
+Meridian Corp offers three health plan tiers:
+- MERIDIAN SELECT: HMO plan, lowest employee premium
+- MERIDIAN PLUS: PPO plan, broader network access
+- MERIDIAN ELITE: PPO plan with dental and vision included, HSA-compatible
+
+Benefit elections take effect the first of the month following your start date.
+Open enrollment occurs each November for January 1 effective dates.
+
+3.3 Retirement
+
+Meridian Corp 401(k) Plan:
+- Immediate eligibility upon hire
+- Company match: 100% of the first 2%, 50% of the next 2% (up to 4% total)
+- Vesting schedule: 25% per year, fully vested at 4 years
+- Investment options managed by Fidelity — contact fidelity.com/meridian for support
+
+3.4 Paid Time Off
+
+Full-time employees accrue PTO at the following rates:
+- Years 0–2: 15 days per year (accrued monthly)
+- Years 3–5: 20 days per year
+- Years 6+: 25 days per year
+
+Additionally:
+- 10 company holidays per year (published in January)
+- 5 sick days per year (separate from PTO, does not accrue)
+- Parental leave: 16 weeks fully paid for primary caregiver, 6 weeks for secondary
+
+3.5 Additional Benefits
+
+- Annual learning stipend: $2,000 for courses, conferences, books, certifications
+- Home office stipend: $500 one-time for remote employees
+- Cell phone reimbursement: $50/month for roles requiring mobile access
+- Employee Assistance Program (EAP): Free confidential counseling, 8 sessions/year
+- Employee stock purchase plan: 15% discount, enrollment each February
+
+================================================================
+CHAPTER 4: CODE OF CONDUCT
+================================================================
+
+4.1 Our Values
+
+INTEGRITY: We do what we say. We say what we do. We don't cut corners when no one
+is watching — especially then.
+
+RESPECT: Every person at Meridian Corp deserves to be treated with dignity. This
+extends to customers, partners, vendors, and competitors.
+
+EXCELLENCE: Good enough isn't. We take pride in our work and hold each other to
+high standards — supportively.
+
+TRANSPARENCY: We share information openly and honestly, even when it's uncomfortable.
+
+4.2 Conflicts of Interest
+
+Employees must disclose any relationship (financial, personal, or professional) that
+could influence — or appear to influence — their decisions on behalf of Meridian Corp.
+Disclosures go to your manager and HR at ethics@meridian.com.
+
+Examples of disclosures required:
+- Ownership stake in a vendor we do or might do business with
+- Close personal relationship with a direct report
+- Outside employment or consulting that overlaps with Meridian Corp business
+
+4.3 Anti-Harassment Policy
+
+Meridian Corp maintains a zero-tolerance policy for harassment of any kind, including:
+- Sexual harassment or unwelcome advances
+- Harassment based on race, gender, religion, national origin, disability, age,
+  sexual orientation, or any other protected characteristic
+- Bullying, intimidation, or creating a hostile work environment
+
+Report concerns to HR directly or via the anonymous Ethics Hotline: 1-800-555-ETHIC.
+
+4.4 Social Media
+
+When posting on personal social media:
+- Do not disclose confidential Meridian Corp information
+- Do not represent personal opinions as official Meridian Corp positions
+- Add "Views are my own" disclaimers when discussing industry topics
+- Employees in IR, Legal, or Marketing roles should review their additional guidelines
+
+================================================================
+CHAPTER 5: WORKPLACE AND REMOTE WORK
+================================================================
+
+5.1 Office Locations
+
+Headquarters: 350 Market Street, San Francisco, CA 94105
+Engineering Hub: 200 Water Street, Austin, TX 78701
+European Office: 12 Finsbury Square, London, EC2A 1AS
+APAC Office: 8 Shenton Way, Singapore 068811
+
+5.2 Remote Work Policy
+
+Meridian Corp operates as a hybrid company. Teams set their own in-office expectations
+within these guidelines:
+- Minimum 2 days in-office per week for roles classified as "hybrid"
+- Fully remote roles are designated at hire and require manager + VP approval to change
+- Core collaboration hours are 10am–3pm in your primary timezone
+
+5.3 Equipment
+
+New employees receive a standard equipment package:
+- MacBook Pro (Engineering) or MacBook Air (all other roles)
+- Company-issued peripherals (monitor, keyboard, mouse) for remote employees
+- Equipment remains Meridian Corp property and must be returned upon departure
+
+================================================================
+CHAPTER 6: PERFORMANCE AND DEVELOPMENT
+================================================================
+
+6.1 Performance Reviews
+
+Formal performance reviews occur twice per year:
+- Mid-year review: July (developmental focus)
+- Annual review: January (compensation decisions)
+
+The performance framework uses four ratings:
+- Exceeds Expectations: Consistently delivers above and beyond
+- Meets Expectations: Delivers on all commitments reliably
+- Developing: Working toward expectations with a clear improvement plan
+- Below Expectations: Serious concerns requiring immediate action
+
+6.2 Career Development
+
+Each employee has a development plan updated annually in partnership with their manager.
+Internal mobility is encouraged — open positions are posted internally 1 week before
+external posting. The Learning Portal offers 5,000+ courses at no employee cost.
+
+================================================================
+CHAPTER 7: LEAVING MERIDIAN CORP
+================================================================
+
+Notice periods:
+- Individual contributor: 2 weeks minimum
+- Manager or above: 4 weeks strongly requested
+
+On your final day, you must return all equipment to IT and complete the exit checklist
+with HR. Access to systems is revoked at end-of-business on your last day.
+
+Non-compete and non-solicit agreements, if applicable, are outlined in your offer letter
+and employment agreement.
+
+================================================================
+QUESTIONS?
+================================================================
+
+HR: hr@meridian.com | ext. 5-HR (5-47)
+IT Help Desk: helpdesk@meridian.com | ext. 5-HELP (5-4357)
+Benefits: benefits@meridian.com
+Ethics Hotline: 1-800-555-ETHIC (anonymous)
+Legal: legal@meridian.com
+
+Handbook version 7 | Effective March 1, 2024
+This handbook does not constitute a contract of employment.

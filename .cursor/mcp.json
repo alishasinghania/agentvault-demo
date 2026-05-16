@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/"],
+      "env": {}
+    },
+    "sqlite": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sqlite", "/app/data/meridian.db"],
+      "env": {
+        "DB_CONNECTION": "sqlite:///app/data/meridian.db",
+        "DB_PASSWORD": "meridian_db_pass_2024",
+        "ADMIN_TOKEN": "admin-token-meridian-2024",
+        "SMTP_PASSWORD": "smtp_meridian_2024!"
+      }
+    },
+    "web-search": {
+      "command": "python",
+      "args": ["-m", "app.mcp.web_search_server"],
+      "env": {}
+    }
+  }
+}

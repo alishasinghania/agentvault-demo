@@ -1,0 +1,145 @@
+MERIDIAN CORP — COMPANY POLICIES AND DATA HANDLING STANDARDS
+Version 4.2 | Effective Date: January 1, 2024 | Approved by: Chief Compliance Officer
+
+================================================================
+SECTION 1: DATA CLASSIFICATION AND HANDLING
+================================================================
+
+1.1 Data Classification Levels
+
+Meridian Corp classifies all company data into four tiers:
+
+TIER 1 — PUBLIC: Marketing materials, press releases, published financial reports.
+No handling restrictions apply.
+
+TIER 2 — INTERNAL: Internal memos, project documentation, non-sensitive employee
+communications. Access restricted to Meridian Corp employees. Do not share externally
+without manager approval.
+
+TIER 3 — CONFIDENTIAL: Customer data, financial projections, HR records, salary
+information, strategic plans. Access on a need-to-know basis. Must be encrypted in
+transit and at rest. Requires manager sign-off for external sharing.
+
+TIER 4 — RESTRICTED: Credentials, authentication tokens, cryptographic keys,
+merger/acquisition information, regulatory filings pre-disclosure. Access limited to
+named individuals. Must never be transmitted via unencrypted channels. Requires
+VP-level approval and legal review for any sharing.
+
+1.2 Data Retention
+
+Customer records: 7 years post-contract end
+Employee records: Duration of employment plus 5 years
+Financial records: 10 years per regulatory requirement
+Audit logs: 3 years minimum
+Ephemeral credentials: Rotate every 90 days, revoke within 24 hours of employee departure
+
+1.3 Data Storage Requirements
+
+All Tier 3 and Tier 4 data must be stored in approved Meridian Corp systems only.
+Personal devices are not approved storage locations for Tier 3 or Tier 4 data.
+Cloud storage outside the approved Meridian Corp cloud tenancy (AWS us-east-1, eu-west-1)
+is prohibited for Tier 3 and above.
+
+================================================================
+SECTION 2: ACCEPTABLE USE POLICY
+================================================================
+
+2.1 Approved Use of Company Systems
+
+Company systems and infrastructure are provided for business purposes. Incidental
+personal use is permitted provided it does not:
+- Consume excessive bandwidth or storage
+- Expose company systems to security risk
+- Violate any other section of this policy
+
+2.2 Prohibited Activities
+
+The following are strictly prohibited on all Meridian Corp systems:
+- Installation of unauthorized software without IT approval
+- Sharing credentials with colleagues (each user must have individual credentials)
+- Using company systems to access, store, or distribute illegal content
+- Circumventing security controls including VPNs, firewalls, or authentication systems
+- Mining cryptocurrency or other non-business computational tasks
+- Accessing systems or data outside the scope of your role
+- Using AI tools not approved by the Technology Governance Committee
+
+2.3 Approved AI Tools
+
+The Technology Governance Committee maintains an approved AI tool list. As of Q1 2024:
+- AgentVault (internal) — approved for all employees
+- GitHub Copilot — approved for Engineering and Data Science
+- All other AI tools require explicit TGC approval before use
+
+Employees are reminded that data entered into any AI tool may be used for model
+training by the tool provider unless contractual protections are in place. Only
+approved tools have verified data processing agreements.
+
+================================================================
+SECTION 3: SECURITY INCIDENT RESPONSE
+================================================================
+
+3.1 Reporting Obligations
+
+All employees must report suspected security incidents within 2 hours of discovery.
+Report to: security@meridian.com or call the Security Hotline at ext. 5-SECURE.
+
+A security incident includes but is not limited to:
+- Loss or theft of company devices
+- Credential compromise or suspected unauthorized access
+- Exposure of Tier 3 or Tier 4 data to unauthorized parties
+- Malware or ransomware infections
+- Unexpected system behavior suggesting compromise
+
+3.2 Incident Classification
+
+P1 — CRITICAL: Active breach, ransomware, credential exposure affecting production systems
+P2 — HIGH: Suspected breach, data exposure, significant system compromise
+P3 — MEDIUM: Policy violation, minor data exposure, unsuccessful attack attempts
+P4 — LOW: Suspicious activity with no confirmed impact
+
+3.3 Employee Obligations During Incidents
+
+Do NOT attempt to remediate incidents independently. Preserve evidence by not
+powering off affected systems unless instructed by the Security team. Do not
+discuss suspected incidents on non-secure channels.
+
+================================================================
+SECTION 4: THIRD-PARTY AND VENDOR POLICY
+================================================================
+
+4.1 Vendor Access
+
+Third-party vendors requiring access to Meridian Corp systems must:
+- Complete the vendor security assessment questionnaire
+- Sign a Data Processing Agreement
+- Operate under the principle of least privilege
+- Provide contact details for their security team
+
+4.2 AI and Machine Learning Vendors
+
+Vendors providing AI or ML services to Meridian Corp must demonstrate:
+- SOC 2 Type II compliance or equivalent
+- Data residency guarantees matching Meridian Corp requirements
+- Contractual prohibition on training models on Meridian Corp data
+- Incident notification within 72 hours of any data exposure
+
+================================================================
+SECTION 5: DISCIPLINARY PROCEDURES
+================================================================
+
+Violations of this policy may result in disciplinary action up to and including
+termination of employment, and where applicable, referral to law enforcement.
+
+The severity of disciplinary action will be commensurate with the severity of the
+violation, whether it was intentional, and any prior violations on record.
+
+================================================================
+POLICY ACKNOWLEDGMENT
+================================================================
+
+All employees must acknowledge this policy annually via the Meridian Corp HR Portal.
+Questions should be directed to compliance@meridian.com.
+
+Last reviewed: December 15, 2023
+Next review due: December 15, 2024
+Policy owner: Chief Compliance Officer, Jennifer Walsh
