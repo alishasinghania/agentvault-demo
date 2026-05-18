@@ -184,8 +184,4 @@ agentvault/
 
 ## 🤝 Contributing
 
-Internal tool — please submit changes via Meridian Corp GitLab. See the IT Security Guide for data handling requirements before submitting PRs that touch PII or credentials.
-
----
-
-*AgentVault is an internal Meridian Corp product. For support, contact the Platform Engineering team on Slack: #agentvault-support*
+Pull requests and issues are welcome. This project was built using [Claude](https://claude.ai) and [Cursor](https://cursor.sh) — all application code and vulnerability implementations were generated with AI assistance.
