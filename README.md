@@ -4,7 +4,6 @@
 > AgentVault is a deliberately insecure application built for security education and CTF-style demos.
 > It contains **14 real, working vulnerabilities** in agentic AI systems.
 > **Do not deploy in production. Do not use real credentials. All "Meridian Corp" credentials are fictional.**
-> See [`VULNERABILITIES.md`](VULNERABILITIES.md) for the full presenter answer key.
 
 ---
 
