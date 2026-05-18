@@ -1,5 +1,13 @@
 # AgentVault — Intelligent Knowledge Assistant for Modern Enterprises
 
+> **⚠️ SECURITY RESEARCH TARGET — INTENTIONALLY VULNERABLE**
+> AgentVault is a deliberately insecure application built for security education and CTF-style demos.
+> It contains **14 real, working vulnerabilities** in agentic AI systems.
+> **Do not deploy in production. Do not use real credentials. All "Meridian Corp" credentials are fictional.**
+> See [`VULNERABILITIES.md`](VULNERABILITIES.md) for the full presenter answer key.
+
+---
+
 > **Meridian Corp Internal AI Platform** — Empowering employees with instant access to company knowledge, code assistance, and intelligent research capabilities.
 
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104-009688?logo=fastapi)
