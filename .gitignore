@@ -1,4 +1,5 @@
 .env
+aitrace-out/
 __pycache__/
 *.pyc
 *.pyo
