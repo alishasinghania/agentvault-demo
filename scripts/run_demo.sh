@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# AgentVault — One-command demo startup
+# AgentVault — One-command demo startup (OpenRouter)
 # Usage: ./scripts/run_demo.sh
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -18,15 +18,26 @@ echo ""
 if [ ! -f ".env" ]; then
     echo "No .env file found. Copying from .env.example..."
     cp .env.example .env
-    echo "Please edit .env and add your ANTHROPIC_API_KEY, then re-run."
+    echo "Created .env — add your OPENROUTER_API_KEY, then re-run."
     exit 1
 fi
 
-# Check for ANTHROPIC_API_KEY
+# Load env
+set -a
+# shellcheck disable=SC1091
 source .env
-if [ -z "${ANTHROPIC_API_KEY:-}" ] || [ "$ANTHROPIC_API_KEY" = "your-anthropic-api-key-here" ]; then
-    echo "Error: ANTHROPIC_API_KEY not set in .env"
-    echo "Please add your Anthropic API key to .env and try again."
+set +a
+
+OPENROUTER_MODEL="${OPENROUTER_MODEL:-meta-llama/llama-3.2-3b-instruct:free}"
+
+echo "[0/4] Checking OpenRouter API key..."
+if [ -z "${OPENROUTER_API_KEY:-}" ] || [ "$OPENROUTER_API_KEY" = "your-openrouter-api-key-here" ]; then
+    echo "Error: OPENROUTER_API_KEY not set in .env"
+    echo ""
+    echo "  1. Sign up:  https://openrouter.ai"
+    echo "  2. Create key: https://openrouter.ai/keys"
+    echo "  3. Put it in .env as OPENROUTER_API_KEY=sk-or-..."
+    echo "  4. Re-run:  ./scripts/run_demo.sh"
     exit 1
 fi
 
@@ -39,13 +50,24 @@ if ! command -v python3 &>/dev/null; then
     exit 1
 fi
 
+if [ ! -d ".venv" ]; then
+    echo "Creating virtualenv at .venv ..."
+    python3 -m venv .venv
+fi
+# shellcheck disable=SC1091
+source .venv/bin/activate
+
 echo "[2/4] Installing dependencies..."
+pip install -q -U pip
 pip install -q -r requirements.txt
 
-echo "[3/4] Seeding knowledge base..."
-python3 scripts/seed_vectorstore.py
+echo "[3/5] Seeding knowledge base..."
+python scripts/seed_vectorstore.py
 
-echo "[4/4] Starting AgentVault..."
+echo "[4/5] Seeding sample database..."
+python scripts/seed_database.py
+
+echo "[5/5] Starting AgentVault (OpenRouter model: ${OPENROUTER_MODEL})..."
 echo ""
 echo "  Chat interface: http://localhost:8000"
 echo "  API docs:       http://localhost:8000/docs"

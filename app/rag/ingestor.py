@@ -1,32 +1,25 @@
-import os
 from pathlib import Path
 from typing import List
-from llama_index import SimpleDirectoryReader, Document
 
 from app.rag.vectorstore import add_documents
+
+_TEXT_EXTENSIONS = {".txt", ".md", ".markdown", ".csv", ".log", ".json", ".yml", ".yaml"}
 
 
 def ingest_document(file_path: str) -> int:
     path = Path(file_path)
-    parent_dir = str(path.parent)
+    if not path.is_file():
+        return 0
 
-    reader = SimpleDirectoryReader(
-        input_dir=parent_dir,
-        input_files=[str(path)],
-        recursive=False,
-    )
-    documents: List[Document] = reader.load_data()
-
+    text = path.read_text(encoding="utf-8", errors="ignore")
     texts = []
     metadatas = []
-    for doc in documents:
-        chunks = _chunk_text(doc.text, chunk_size=512, overlap=50)
-        for chunk in chunks:
-            texts.append(chunk)
-            metadatas.append({
-                "source": path.name,
-                "file_path": str(path),
-            })
+    for chunk in _chunk_text(text, chunk_size=512, overlap=50):
+        texts.append(chunk)
+        metadatas.append({
+            "source": path.name,
+            "file_path": str(path),
+        })
 
     if texts:
         add_documents(texts, metadatas)
@@ -35,21 +28,29 @@ def ingest_document(file_path: str) -> int:
 
 
 def ingest_directory(directory: str) -> int:
-    reader = SimpleDirectoryReader(
-        input_dir=directory,
-        recursive=True,
-    )
-    documents: List[Document] = reader.load_data()
+    root = Path(directory)
+    if not root.is_dir():
+        return 0
 
-    texts = []
-    metadatas = []
-    for doc in documents:
-        chunks = _chunk_text(doc.text, chunk_size=512, overlap=50)
-        for chunk in chunks:
+    texts: List[str] = []
+    metadatas: List[dict] = []
+
+    for path in sorted(root.rglob("*")):
+        if not path.is_file() or path.name.startswith("."):
+            continue
+        if path.suffix.lower() not in _TEXT_EXTENSIONS and path.suffix.lower() not in {".txt", ".md"}:
+            # Still allow extensionless / .txt knowledge-base files
+            if path.suffix and path.suffix.lower() not in _TEXT_EXTENSIONS:
+                continue
+        try:
+            text = path.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        for chunk in _chunk_text(text, chunk_size=512, overlap=50):
             texts.append(chunk)
             metadatas.append({
-                "source": doc.metadata.get("file_name", "unknown"),
-                "file_path": doc.metadata.get("file_path", ""),
+                "source": path.name,
+                "file_path": str(path),
             })
 
     if texts:

@@ -7,6 +7,7 @@ from app.agents.research_crew import run_research
 from app.agents.memory_agent import MemoryAgent
 from app.rag.retrieval_chain import RetrievalChain
 from app.tools.utils import quick_classify
+from app.tools.database_tool import execute_query
 
 
 class AgentOrchestrator:
@@ -44,18 +45,26 @@ class AgentOrchestrator:
             )
 
         elif intent == "database_query":
+            db_result = await asyncio.to_thread(execute_query, user_message)
             messages = history + [{"role": "user", "content": user_message}]
             response = await asyncio.to_thread(
                 self.primary_agent.run,
                 messages,
+                f"Database tool result:\n{db_result}",
             )
 
         elif intent == "email":
+            # Demo path: ask the model to draft fields, then attempt send
             messages = history + [{"role": "user", "content": user_message}]
-            response = await asyncio.to_thread(
+            draft = await asyncio.to_thread(
                 self.primary_agent.run,
                 messages,
+                (
+                    "The user wants an email sent. Reply with a short confirmation of what "
+                    "you would send (to, subject, body). If details are missing, ask for them."
+                ),
             )
+            response = draft
 
         else:
             rag_context = await asyncio.to_thread(

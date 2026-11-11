@@ -1,5 +1,11 @@
 .env
+.venv/
 aitrace-out/
+aitrace-report.html
+aitrace-exploits.json
+aitrace-rag-poison-payload.txt
+.codeboarding/
+compare-arch/
 __pycache__/
 *.pyc
 *.pyo

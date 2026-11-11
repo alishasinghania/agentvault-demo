@@ -8,9 +8,13 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 from typing import Optional
 
+from app.code_flow.entry import handle_code_question
 from app.config import UPLOAD_DIR
+from app.email_flow.entry import handle_email_request
 from app.orchestrator import AgentOrchestrator
 from app.rag.ingestor import ingest_document
+from app.request_flow.intake import accept_user_message
+from app.sql_flow.entry import handle_db_question
 
 app = FastAPI(
     title="AgentVault",
@@ -36,10 +40,20 @@ async def root():
 
 
 @app.post("/api/chat")
-async def chat(request: ChatRequest):
+async def chat(body: ChatRequest):
+    """Chat entry — `body.message` is the taint source for AITrace FLOW-LLM demos.
+
+    Cross-file chain (top-level import + direct call so static taint resolves):
+      body.message → intake.accept_user_message → pass_through.forward_user_query
+        → llm_sink.invoke_chat_model (llm.invoke)
+    """
     try:
-        response = await orchestrator.run(request.message, request.session_id)
-        return {"response": response, "session_id": request.session_id}
+        user_text = body.message
+        session_id = body.session_id or "default"
+        # Direct call — AITrace interproc taint follows this across modules
+        response = accept_user_message(user_text, session_id)
+        orchestrator.memory_agent.add_exchange(session_id, user_text, response)
+        return {"response": response, "session_id": session_id}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -56,7 +70,8 @@ async def websocket_chat(websocket: WebSocket):
             await websocket.send_json({"type": "start"})
 
             try:
-                response = await orchestrator.run(message, session_id)
+                response = accept_user_message(message, session_id)
+                orchestrator.memory_agent.add_exchange(session_id, message, response)
                 for chunk in response.split(" "):
                     await websocket.send_json({"type": "token", "content": chunk + " "})
                     await asyncio.sleep(0.02)
@@ -68,8 +83,39 @@ async def websocket_chat(websocket: WebSocket):
         pass
 
 
+@app.post("/api/db-query")
+async def db_query(body: ChatRequest):
+    """Dedicated DB path for multi-flow SQL demos (`body.message` → generate_sql → execute)."""
+    try:
+        result = handle_db_question(body.message)
+        return {"response": result, "session_id": body.session_id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/run-code")
+async def run_code(body: ChatRequest):
+    """Dedicated code path for multi-flow RCE demos (`body.message` → generate_code → exec)."""
+    try:
+        result = handle_code_question(body.message)
+        return {"response": result, "session_id": body.session_id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/send-email")
+async def send_email(body: ChatRequest):
+    """Dedicated email path (draft + send without human confirmation)."""
+    try:
+        result = handle_email_request(body.message)
+        return {"response": result, "session_id": body.session_id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/api/documents")
 async def upload_document(file: UploadFile = File(...)):
+    """Unauthenticated upload → knowledge base ingest (RAG poison surface)."""
     allowed_extensions = {".txt", ".pdf", ".md", ".docx"}
     file_ext = Path(file.filename).suffix.lower()
 

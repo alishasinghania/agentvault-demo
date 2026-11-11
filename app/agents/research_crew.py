@@ -1,15 +1,10 @@
 from crewai import Agent, Task, Crew, Process
-from langchain_community.llms import Anthropic
 
-from app.config import ANTHROPIC_API_KEY
+from app.llm import get_langchain_llm
 
 
 def build_research_crew(topic: str) -> Crew:
-    llm = Anthropic(
-        anthropic_api_key=ANTHROPIC_API_KEY,
-        model="claude-3-haiku-20240307",
-        max_tokens_to_sample=1024,
-    )
+    llm = get_langchain_llm()
 
     researcher = Agent(
         role="Senior Research Analyst",
